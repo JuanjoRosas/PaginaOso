@@ -1,19 +1,13 @@
 <?php
 session_start();
 include ("../Modelo/Conexion/conexion.php");
-if(isset($_POST["subir"])){
-$radio=$_POST['optionsRadios'];
-if($radio=="option2"){
+if(isset($_POST["login"])){
+$usuario=$_POST['usuario'];
     $estudiante=3;
-    mysqli_query($conexion, "UPDATE usuario SET ustipo = '$estudiante' WHERE id =")
+    $consulta= "UPDATE usuario SET ustipo = '$estudiante' WHERE documento = $usuario";
+    $resultado = mysqli_query($conexion,$consulta);
+echo "<script> location='../Paginas-Admin/Aprovar-Estudiante.php'</script>";
 }
-
-if(consultasSQL::UpdateSQL("cliente", $campos, "NIT='$code'")){
-    $_SESSION['nombreUser'];
-    echo '<script> location.href="../index.php"; </script>';
-}else{
-    echo '<script>swal("ERROR", "Ocurrio un error inesperado", "error");</script>';
-}
-}
+mysqli_close($conexion);
 
 ?>

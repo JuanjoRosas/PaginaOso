@@ -275,7 +275,7 @@
                                                         <span class="fas fa-download"></span></td>
                                         
                                                 <td>
-                                                    <a href="Aceptar.php"
+                                                    <a href="Aceptar.php?idusuario=<?php echo $mostrar['idusuario'] ?>"
                                                         class="btn btn-success btn-circle ">
                                                         <i class="fas fa-check"></i>
                                                         </a>

@@ -60,6 +60,12 @@
                                             Usuario
                                         </label>
                                     </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" value="option3">
+                                            Estudiante
+                                        </label>
+                                    </div>
 
                                     <div class="radio">
                                         <label>
@@ -67,6 +73,7 @@
                                             Administrador
                                         </label>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="text-center text-lg-start mt-4 pt-2">

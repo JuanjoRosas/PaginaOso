@@ -28,7 +28,7 @@ if($nit!="" && $contraseña!=""){
         $resultado = mysqli_query($conexion,$verUser);
         
         $filaU=mysqli_fetch_array($resultado);
-        if($filaU['ustipo']==2){//admin
+        if($filaU['ustipo']==2){//Usuario
             $_SESSION['active']= true;
             $_SESSION['nombreUser']=$nit;
             $_SESSION['claveUser']=$contraseña;
@@ -39,6 +39,22 @@ if($nit!="" && $contraseña!=""){
             echo "<script>alert('Usuario o contraseña incorrectos');window.location='../Paginas/IniciarSesion.php'</script>";
         }
     }
+    if($radio=="option3"){
+        $verEstudiante="SELECT * FROM usuario WHERE documento='$nit' AND contraseña='$contraseña' ";
+        $resultado = mysqli_query($conexion,$verEstudiante);
+        $filaU=mysqli_fetch_array($resultado);
+        if($filaU['ustipo']==3){//Estudiante
+               $_SESSION['active']= true;
+              $_SESSION['nombreEstudent']=$nit;
+              $_SESSION['claveEstudent']=$contraseña;
+              $_SESSION['UserType']="Estudent";
+              $_SESSION['EstudentID']=$filaU['documento'];
+              echo "<script>alert('Se ha logueado');window.location='../index.php'</script>";
+              
+          }else{
+              echo "<script>alert('Usuario o contraseña incorrectos');window.location='../Paginas/IniciarSesion.php'</script>";
+          }
+      }
 
 }else{
     echo 'Error campo vacío<br>Intente nuevamente';

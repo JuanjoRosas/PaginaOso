@@ -211,61 +211,72 @@
                         <div class="card-body">
                             <form class="form-horizontal" action="../Controlador/Actualizar-Usuario.php" method="POST"
                                 class="formularior" id="formar" name="formar">
-                               
-                                    <label for="telefono" class="col-sm-2 col-form-label">Tipo De Usuario</label>
-                                    <div class="form-outline mb-4">
-                                        <input type="text" name="nombre" id="form3Example3"
-                                            class="form-control form-control-lg" />
-                                        <label class="form-label" for="form3Example3">Nombre-Completo</label>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option1" checked="">
-                                                Usuario
-                                            </label>
-                                        </div>
-
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" value="option2">
-                                                Estudiante
-                                            </label>
-                                        </div>
-                                    </div>
-
+                                <div class="form-outline mb-4">
+                                    <select name="usuario">
+                                        <option value=""> Seleccinar usuario</option>
+                                        <?php
                                 
-                                <Button name="login" type="submit" class="btn btn-primary btn-lg"
-                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Cambiar</Button>
-                            </form>
+                                    $sql = "SELECT * FROM usuario";
+                                     $resultada = mysqli_query($conexion,$sql);
+                                     while($mostrar=mysqli_fetch_array($resultada) ){
+                                    echo "<option value='".$mostrar['documento']."'>".$mostrar['documento']."</option>";
+                                     }
+                               ?>
+                                    </select>
+
+                                </div>
+                                <label for="telefono" class="col-sm-2 col-form-label">Tipo De Usuario</label>
+                                <div class="row">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option1" checked="">
+                                    Usuario
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option2">
+                                    Estudiante
+                                </label>
+                            </div>
                         </div>
 
 
+                        <Button name="login" type="submit" class="btn btn-primary btn-lg"
+                            style="padding-left: 2.5rem; padding-right: 2.5rem;">Cambiar</Button>
 
+                        </div>
 
+                        
+                        </form>
                     </div>
-                </div>
 
+
+
+
+                </div>
             </div>
 
-
-
-
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
         </div>
-        <!-- End of Content Wrapper -->
+
+
+
+
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2021</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
