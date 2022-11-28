@@ -11,7 +11,7 @@ if(isset($_POST["subir"])){
             $route_tarea="../img/Tareas/".$tarea;
             move_uploaded_file($tarea_tmp,$route_tarea);
 
-            $consulta = "INSERT INTO tareas(id,titulo,descripcion,archivo)
+            $consulta = "INSERT INTO tarea(id,titulo,descripcion,archivo)
             VALUES('$codigo','$titulo','$descripcion','$tarea')";
             $resultado = mysqli_query($conexion,$consulta);
             if($resultado){

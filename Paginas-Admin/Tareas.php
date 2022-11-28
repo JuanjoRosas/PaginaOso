@@ -270,7 +270,7 @@
                                     <?php
   
                                     if(!$_SESSION['nombreAdmin']==""){
-                                     $sqla = "SELECT * FROM tareas";
+                                     $sqla = "SELECT * FROM tarea ";
                                     $resultada = mysqli_query($conexion,$sqla);
 
                                         }

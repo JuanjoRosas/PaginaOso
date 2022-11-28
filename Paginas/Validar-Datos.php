@@ -1,3 +1,8 @@
+<?php 
+    session_start(); 
+    error_reporting(E_PARSE);
+    include ("../Modelo/Conexion/conexion.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,6 +76,21 @@
                                 <input name="certificado" type="file" id="form3Example3" class="form-control form-control-lg"
                                 />
                                 <label class="form-label" for="form3Example3">Certificado-Matricula_Academica</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <select name="usuario">
+                               <option value=""> Seleccinar usuario</option>
+                               <?php
+                                
+                                    $sql = "SELECT * FROM usuario";
+                                     $resultada = mysqli_query($conexion,$sql);
+                                     while($mostrar=mysqli_fetch_array($resultada) ){
+                                    echo "<option value='".$mostrar['documento']."'>".$mostrar['documento']."</option>";
+                                     }
+                               ?>
+                               </select>
+                                <label class="form-label" for="form3Example3">Usuario</label>
                             </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">

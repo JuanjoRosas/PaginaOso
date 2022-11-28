@@ -200,99 +200,72 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                
 
 
-            <div class="col-md-9">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title">Editar Datos Usuario</h3>
+
+                <div class="col-md-9">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Editar Datos Usuario</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form-horizontal" action="../Controlador/Actualizar-Usuario.php" method="POST"
+                                class="formularior" id="formar" name="formar">
+                               
+                                    <label for="telefono" class="col-sm-2 col-form-label">Tipo De Usuario</label>
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="nombre" id="form3Example3"
+                                            class="form-control form-control-lg" />
+                                        <label class="form-label" for="form3Example3">Nombre-Completo</label>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option1" checked="">
+                                                Usuario
+                                            </label>
+                                        </div>
+
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="option2">
+                                                Estudiante
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                
+                                <Button name="login" type="submit" class="btn btn-primary btn-lg"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Cambiar</Button>
+                            </form>
+                        </div>
+
+
+
+
                     </div>
-                    <div class="card-body">
-                        <form class="form-horizontal" action="../InicioSesión/Actualiza.php" method="POST"
-                            class="formularior" id="formar" name="formar">
-                            <div class="form-group row">
-                                <label for="telefono" class="col-sm-2 col-form-label">Documento</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="documento" id="telefono" class="form-control">
-                                </div>
+                </div>
 
-                            </div>
-                            <div class="form-group row">
-                                <label for="residencia" class="col-sm-2 col-form-label">Nombre</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="nombre" id="nombre" class="form-control">
-                                </div>
-
-                            </div>
-                            <div class="form-group row">
-                                <label for="sexo" class="col-sm-2 col-form-label">Correo</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="correo" id="apellido" class="form-control">
-                                </div>
-
-                            </div>
-                            <div class="form-group row">
-                                <label for="email" class="col-sm-2 col-form-label">Celular</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="celular" id="email" class="form-control">
-                                </div>
-
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="email" class="col-sm-2 col-form-label">Tipo-usuario</label>
-                                <div class="col-sm-10">
-                                    <input type="int" name="tipo" id="email" class="form-control">
-                                </div>
-
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="info" class="col-sm-2 col-form-label">Dirección</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" name="direccion" id="direccion" cols="30"
-                                        rows="10"></textarea>
-                                </div>
-
-                            </div>
-                            <div class="form-group row">
-
-                                <div class="offset-sm-2 col-sm-10 float-right">
-                                    <button name="actualizar" id="actualizar"
-                                        class="btn btn-block btn-outline-success">Guardar</button>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                    <div class=" card-footer">
-                        <p class="text-muted">Cuidado con ingresar datos erroneos</p>
-                    </div>
-
-               
             </div>
+
+
+
+
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
         </div>
-
-    </div>
-
- 
-
-
-    <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2021</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
+        <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->

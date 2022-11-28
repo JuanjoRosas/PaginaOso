@@ -231,15 +231,14 @@
   
                                                 if(!$_SESSION['nombreAdmin']==""){
                                                  $sql = "SELECT * FROM validardatos";
-                                                 $sqla = "SELECT * FROM usuario";
                                                   $resultada = mysqli_query($conexion,$sql);
-                                                  $resultadousuario = mysqli_query($conexion,$sqla);
+                                                  
 
                                                 }
  
  
                                             while($mostrar=mysqli_fetch_array($resultada) ){
-                                                while($mostrarusuario=mysqli_fetch_array($resultadousuario)){
+                                               
                                                 $rutaReporte = "../img/Documentos".$nit."/".$mostrar['reporte'];
                                                 $nombreArchivoReporte = $mostrar['reporte'];
                                                 $rutaPago = "../img/Documentos".$nit."/".$mostrar['pago'];
@@ -251,7 +250,7 @@
                                         ?>
                                             <tr>
                                              
-                                                <td><?php echo $mostrarusuario['documento']; ?></td>
+                                                <td><?php echo $mostrar['idusuario']; ?></td>
                                                 
                                             
                                                 <td><?php echo $mostrar['id']; ?></td>
@@ -292,7 +291,7 @@
                                             </tr>
                                             
                                             <?php
-                                                }
+                                                
                                             }
                                             ?>
                                         </tbody>
