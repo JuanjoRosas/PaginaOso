@@ -230,7 +230,7 @@
                                             <?php
   
                                                 if(!$_SESSION['nombreAdmin']==""){
-                                                 $sql = "SELECT * FROM validardatos";
+                                                 $sql = "SELECT * FROM validardatos WHERE verificar!=1";
                                                   $resultada = mysqli_query($conexion,$sql);
                                                   
 
@@ -275,7 +275,8 @@
                                                         <span class="fas fa-download"></span></td>
                                         
                                                 <td>
-                                                    <a href="Aceptar.php?idusuario=<?php echo $mostrar['idusuario'] ?>"
+                                                
+                                                    <a href="../Controlador/Actualizar-Usuario.php?idusuario=<?php echo $mostrar['idusuario'] ?>&id=<?php echo $mostrar['id'] ?>"
                                                         class="btn btn-success btn-circle ">
                                                         <i class="fas fa-check"></i>
                                                         </a>

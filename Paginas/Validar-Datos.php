@@ -34,6 +34,7 @@
                         <img src="../img/lg_vertical.png"
                             class="img" alt="Sample image">
                     </div>
+                    
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form action="../Controlador/SubirArchivos.php" method="POST" enctype="multipart/form-data">
                         
@@ -78,20 +79,6 @@
                                 <label class="form-label" for="form3Example3">Certificado-Matricula_Academica</label>
                             </div>
 
-                            <div class="form-outline mb-4">
-                                <select name="usuario">
-                               <option value=""> Seleccinar usuario</option>
-                               <?php
-                                
-                                    $sql = "SELECT * FROM usuario";
-                                     $resultada = mysqli_query($conexion,$sql);
-                                     while($mostrar=mysqli_fetch_array($resultada) ){
-                                    echo "<option value='".$mostrar['documento']."'>".$mostrar['documento']."</option>";
-                                     }
-                               ?>
-                               </select>
-                                <label class="form-label" for="form3Example3">Usuario</label>
-                            </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">
                             <Button name="archivos" type="submit" class="btn btn-primary btn-lg"

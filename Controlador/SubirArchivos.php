@@ -3,7 +3,8 @@ session_start();
 include ("../Modelo/Conexion/conexion.php");
 if(isset($_POST["archivos"])){
 
-$usuario=$_POST['usuario'];
+$usuario=$_SESSION['nombreUser'];
+$verificar=0;
 $consig=$_POST['consignacion'];
 $reporte=$_FILES['reporte']['name'];
 $pago=$_FILES['pago']['name'];
@@ -25,8 +26,8 @@ move_uploaded_file($pago_tmp,$route_pago);
 move_uploaded_file($documento_tmp,$route_documento);
 move_uploaded_file($certificado_tmp,$route_certificado);
 
-$consulta = "INSERT INTO validardatos(id,reporte,pago,cedula,certificado,idusuario)
-VALUES('$consig','$reporte','$pago','$documento','$certificado','$usuario')";
+$consulta = "INSERT INTO validardatos(id,reporte,pago,cedula,certificado,idusuario,verificar)
+VALUES('$consig','$reporte','$pago','$documento','$certificado','$usuario','$verificar')";
 $resultado = mysqli_query($conexion,$consulta);
     
 echo "<script>alert('Se ha logueado');window.location='../index.php'</script>";

@@ -9,6 +9,7 @@ if(isset($_POST["registro"])){
             $correo=$_POST["email"];
             $contraseña=$_POST["contraseña"];
             $tipo=2; 
+            
            
 
             $consulta = "INSERT INTO usuario(documento,nombre,correo,celular,contraseña,direccion,ustipo)
