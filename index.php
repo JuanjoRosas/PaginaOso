@@ -89,21 +89,20 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
 
-                    <?php if(!$_SESSION['nombreEstudent']==""){
+                    <?php if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){
                 echo '
-                         <a class="collapse-item" href="utilities-color.html">Calificaciones</a>
-                        <a class="collapse-item" href="utilities-border.html">Tareas</a>
-                        <a class="collapse-item"
-                        href="Paginas/Confirmado-por-Admin/Evaluacion-curso.php">Evaluaciones</a>
-                        <a class="collapse-item" href="utilities-other.html">Exposiciones</a>
+                         <a class="collapse-item" href="#">Calificaciones</a>
+                        <a class="collapse-item" href="#">Actividades</a>
+            ';
+            }else if(!$_SESSION['nombreAdmin']==""){
+                echo '
+                         <a class="collapse-item" href="#">Calificaciones</a>
+                        <a class="collapse-item" href="#">Actividades</a>
             ';
             }else{
              echo '
              <a class="collapse-item" href="#">Calificaciones</a>
-             <a class="collapse-item" href="#">Tareas</a>
-             <a class="collapse-item"
-                 href="#">Evaluaciones</a>
-             <a class="collapse-item" href="#">Exposiciones</a>
+            <a class="collapse-item" href="#">Actividades</a>
             ';    
             }
                         
@@ -117,11 +116,13 @@
 
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <?php if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){
+                echo '
+                <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Resivos</span>
+                    <span>Recibios</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -131,17 +132,72 @@
                     </div>
                 </div>
             </li>
+            ';
+            }else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){
+                echo '
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Recibios</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
+                        <a class="collapse-item" href="#">Pagos</a>
+
+                    </div>
+                </div>
+            </li>
+            ';
+            }else if(!$_SESSION['nombreAdmin']==""){
+                echo '
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Recibios</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
+                        <a class="collapse-item" href="#">Pagos</a>
+
+                    </div>
+                </div>
+            </li>
+            ';
+            
+        }else{
+             echo '
+             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Recibos</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
+                        <a class="collapse-item" href="#">Pagos</a>
+
+                    </div>
+                </div>
+            </li>
+            ';    
+            }
+            ?>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Certificado</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="#">
                     <i class="fa fa-credit-card-alt"></i>
                     <span>Evaluacion-Docente</span></a>
             </li>
@@ -178,29 +234,8 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                        
+                        
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -313,8 +348,6 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">PAGINA-PRINCIPAL</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
 
@@ -324,7 +357,10 @@
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
                             <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Your Website 2021</span>
+                                <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy;  Desarrollado por:OSCAR FELIPE CACERES SUAREZ <br>
+                                    Versión: 1.0</span>
+                                
+        
                             </div>
                         </div>
                     </footer>

@@ -71,9 +71,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <a class="collapse-item" href="#">Estudiantes-Matriculados</a>
-                        <a class="collapse-item" href="Tareas.php">Tareas</a>
-                        <a class="collapse-item" href="utilities-animation.html">Evaluaciones</a>
-                        <a class="collapse-item" href="utilities-other.html">Exposiciones</a>
+                        <a class="collapse-item" href="Escoger-curso.php">Actividades</a>
+       
                     </div>
                 </div>
             </li>
@@ -91,8 +90,8 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="login.html">Reporte-<br>Terminacion_Materias</a>
-                        <a class="collapse-item" href="register.html">Pagos</a>
+                        <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
+                        <a class="collapse-item" href="#">Pagos</a>
 
                     </div>
                 </div>
@@ -144,30 +143,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
+                       
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -291,10 +267,11 @@
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
                             <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Your Website 2021</span>
-                            </div>
+                                <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy;  Desarrollado por:OSCAR FELIPE CACERES SUAREZ <br>
+                                    Versión: 1.0</span>
                         </div>
-                    </footer>
+                    </div>
+                </footer>
                     <!-- End of Footer -->
 
                 </div>

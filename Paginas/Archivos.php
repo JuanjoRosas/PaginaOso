@@ -62,19 +62,19 @@
                          if(!$_SESSION['nombreUser']==""){
                         echo '
             <li class="nav-item">
-                <a class="nav-link" href="Cursos.php">
+                <a class="nav-link" href="Paginas/Cursos.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Cursos</span></a>
             </li>
             ';
-            } else{
-             echo '
+            } else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){
+                echo '
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Cursos</span></a>
-            </li>
-            ';    
+             <a class="nav-link" href="Paginas/Confirmado-por-Admin/Cursos-confirmado.php">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Cursos</span></a>
+                </li>
+            '; 
             }
            
             ?>
@@ -90,11 +90,25 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <?php if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){
+                echo '
+                         <a class="collapse-item" href="#">Calificaciones</a>
+                        <a class="collapse-item" href="#">Actividades</a>
+            ';
+            }else if(!$_SESSION['nombreAdmin']==""){
+                echo '
+                         <a class="collapse-item" href="#">Calificaciones</a>
+                        <a class="collapse-item" href="#">Actividades</a>
+            ';
+            }else{
+             echo '
+             <a class="collapse-item" href="#">Calificaciones</a>
+            <a class="collapse-item" href="#">Actividades</a>
+            ';    
+            }
+                        
+                        ?>
 
-                        <a class="collapse-item" href="utilities-color.html">Calificaciones</a>
-                        <a class="collapse-item" href="utilities-border.html">Tareas</a>
-                        <a class="collapse-item" href="utilities-animation.html">Evaluaciones</a>
-                        <a class="collapse-item" href="utilities-other.html">Exposiciones</a>
                     </div>
                 </div>
             </li>
@@ -104,11 +118,13 @@
 
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <?php if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){
+                echo '
+                <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Resivos</span>
+                    <span>Recibios</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -118,6 +134,61 @@
                     </div>
                 </div>
             </li>
+            ';
+            }else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){
+                echo '
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Recibios</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
+                        <a class="collapse-item" href="#">Pagos</a>
+
+                    </div>
+                </div>
+            </li>
+            ';
+            }else if(!$_SESSION['nombreAdmin']==""){
+                echo '
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Recibios</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
+                        <a class="collapse-item" href="#">Pagos</a>
+
+                    </div>
+                </div>
+            </li>
+            ';
+            
+        }else{
+             echo '
+             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Recibos</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
+                        <a class="collapse-item" href="#">Pagos</a>
+
+                    </div>
+                </div>
+            </li>
+            ';    
+            }
+            ?>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -165,30 +236,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
+                       
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -200,7 +248,7 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreUser'].'</span>
                             <img class="img-profile rounded-circle"
-                                src="../img/undraw_profile.svg">
+                                src="img/undraw_profile.svg">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -244,7 +292,31 @@
                             </div>
                         </li>
                             ';
-         
+                        }else if(!$_SESSION['nombreEstudent']==""){
+                            echo ' 
+                            <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreEstudent'].'</span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Cuenta
+                                </a>
+                        
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Salir
+                                </a>
+                            </div>
+                        </li>
+                            ';
                              }else{
                              echo '
                              <li class="nav-item dropdown no-arrow">
@@ -265,7 +337,6 @@
                              ';
                          }
                         ?>
-
                     </ul>
 
                 </nav>
@@ -273,33 +344,33 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                <?php
-                         if(!$_SESSION['nombreUser']==""){
+                    <?php
+                         if(!$_SESSION['nombreUser']==""&& !$_SESSION['CodigoEstudent']==""){
                             $sql = "SELECT * FROM validardatos";
                                     $resultad = mysqli_query($conexion,$sql);
 
                          }
                         
                          ?>
-                         <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Archivos</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                        
-                                                
-                                                <th>Archivo</th>
-                                                <th>Tipo</th>
-                                                <th>Descargar</th>
-                                                
-                                            </tr>
-                                        </thead>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Archivos</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
 
-                                        <tbody>
+
+                                            <th>Archivo</th>
+                                            <th>Tipo</th>
+                                            <th>Descargar</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
                                         <?php
 
                                             while($mostrar=mysqli_fetch_array($resultad)){
@@ -313,61 +384,66 @@
                                                 $rutaCertificado = "../img/Documentos".$nit."/".$mostrar['certificado'];
                                                 $nombreArchivoCertificado = $mostrar['certificado'];
                                         ?>
-                                         <tr>
+                                        <tr>
                                             <td><?php echo $mostrar['reporte']; ?></td>
                                             <td>PDF</td>
                                             <td>
                                                 <a href="<?php echo  $rutaReporte; ?>"
-                                                download="<?php echo $nombreArchivoReporte; ?>" class= "btn btn-success btn-sm ">
-                                                <span class="fas fa-download"></span>
-                                                
-                                            </a>
+                                                    download="<?php echo $nombreArchivoReporte; ?>"
+                                                    class="btn btn-success btn-sm ">
+                                                    <span class="fas fa-download"></span>
+
+                                                </a>
                                             </td>
-                                            
-                                           
-                                            </tr>
-                                            <tr>
-                                                <td><?php echo $mostrar['pago']; ?></td>
-                                                <td>PDF</td>
-                                                <td>
-                                                     <a href="<?php echo $rutaPago; ?>"
-                                                download="<?php echo $nombreArchivoPago; ?>" class= "btn btn-success btn-sm ">
-                                                <span class="fas fa-download"></span></td>
-                                                
-                                              
-                                            </tr>
-                                            <tr>
-                                                <td><?php echo $mostrar['cedula']; ?></td>
-                                                <td>PDF</td>
-                                                <td>
+
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $mostrar['pago']; ?></td>
+                                            <td>PDF</td>
+                                            <td>
+                                                <a href="<?php echo $rutaPago; ?>"
+                                                    download="<?php echo $nombreArchivoPago; ?>"
+                                                    class="btn btn-success btn-sm ">
+                                                    <span class="fas fa-download"></span>
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $mostrar['cedula']; ?></td>
+                                            <td>PDF</td>
+                                            <td>
                                                 <a href="<?php echo $rutaCedula; ?>"
-                                                download="<?php echo $nombreArchivoCedula; ?>" class= "btn btn-success btn-sm ">
-                                                <span class="fas fa-download"></span>
-                                                
-                                               
-                                            </tr>
-                                            <tr>
-                                                <td><?php echo $mostrar['certificado']; ?></td>
-                                                <td>PDF</td>
-                                                <td>
+                                                    download="<?php echo $nombreArchivoCedula; ?>"
+                                                    class="btn btn-success btn-sm ">
+                                                    <span class="fas fa-download"></span>
+
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $mostrar['certificado']; ?></td>
+                                            <td>PDF</td>
+                                            <td>
                                                 <a href="<?php echo $rutaCertificado; ?>"
-                                                download="<?php echo $nombreArchivoCertificado; ?>" class= "btn btn-success btn-sm ">
-                                                <span class="fas fa-download"></span>
-                                                </td>
-                                                
-                                               
-                                            </tr>
-                                            <?php
+                                                    download="<?php echo $nombreArchivoCertificado; ?>"
+                                                    class="btn btn-success btn-sm ">
+                                                    <span class="fas fa-download"></span>
+                                            </td>
+
+
+                                        </tr>
+                                        <?php
                                             }
                                             ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+                    </div>
 
-                    
-                
+
+
                 </div>
 
 
@@ -377,9 +453,10 @@
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2021</span>
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy;  Desarrollado por:OSCAR FELIPE CACERES SUAREZ <br>
+                                    Versión: 1.0</span>
                         </div>
                     </div>
                 </footer>
