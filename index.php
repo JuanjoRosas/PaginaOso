@@ -6,6 +6,7 @@
     }else{
         $_SESSION['verificarLogin']=1;
     }
+    $_SESSION['notaFinalEstudiante']=3.1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +64,7 @@
 
             <!-- Nav Item - Pages Collapse Menu - ENLACE A CURSOS -->
             <?php
-            if(!$_SESSION['nombreUser']==""){
+            if(!$_SESSION['nombreUser']==""){//usuario puede ver los cursos disponibles y subir documentos para ser estudiante
                 echo '
                     <li class="nav-item">
                         <a class="nav-link" href="Paginas/Cursos.php">
@@ -71,12 +72,21 @@
                         <span>Cursos</span></a>
                     </li>
                 ';
-            } else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){
+            } else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){//estudiante sin codigo puede ver cursos y subir pagos para registrarse en uno
                 echo '
                     <li class="nav-item">
                         <a class="nav-link" href="Paginas/Confirmado-por-Admin/Cursos-confirmado.php">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Cursos</span></a>
+                    </li>
+                '; 
+            } else if(!$_SESSION['nombreAdmin']==""){//admin puede aprovar o rechazar solicitudes de usuarios a estudiante
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="Paginas-Admin/Aprovar-Estudiante.php">
+                            <i class="fas fa-fw fa-table"></i>
+                            <span>Aprovar-Estudiante</span>
+                        </a>
                     </li>
                 '; 
             }
@@ -88,7 +98,17 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Informacion-Cursos</span>
+                    <?php
+                        if(!$_SESSION['nombreAdmin']==""){
+                            echo '
+                                <span>Informacion-Estudiantes</span>
+                            ';
+                        }else{
+                            echo '
+                                <span>Informacion-Cursos</span>
+                            ';
+                        }
+                    ?>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -101,7 +121,7 @@
                                 ';
                             }else if(!$_SESSION['nombreAdmin']==""){//Admin
                                 echo '
-                                    <a class="collapse-item" href="#">Calificaciones</a>
+                                    <a class="collapse-item" href="Paginas-Admin/Estudiantes-Matriculados.php">Estudiantes-Matriculados</a>
                                     <a class="collapse-item" href="#">Actividades</a>
                                 ';
                             }//Si es estudiante sin curso asignado, usuariono o no está logeado no despliega nada
@@ -157,7 +177,7 @@
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
+                                    <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
                                     <a class="collapse-item" href="#">Pagos</a>
                                 </div>
                             </div>

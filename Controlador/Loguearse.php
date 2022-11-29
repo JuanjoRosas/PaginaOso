@@ -17,7 +17,7 @@ if($nit!="" && $contraseña!=""){
             $_SESSION['claveAdmin']=$contraseña;
             $_SESSION['UserType']="Admin";
             $_SESSION['adminID']=$filaU['documento'];
-            echo "<script>alert('Se ha logueado como Administrador');window.location='../Paginas-Admin/index-Admin.php'</script>";
+            echo "<script>alert('Se ha logueado como Administrador');window.location='../index.php'</script>";
             $_SESSION['verificarLogin']=1;
         }else{
             echo "<script>alert('Usuario o contraseña incorrectos');window.location='../Paginas/IniciarSesion.php'</script>";
