@@ -1,3 +1,8 @@
+<?php 
+    session_start(); 
+    error_reporting(E_PARSE);
+    include ("../Modelo/Conexion/conexion.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +15,10 @@
     <meta name="author" content="">
 
     <title>Cusor-Profundizacion</title>
+     <!-- links para exportar a excel -->
+     <script src="https://unpkg.com/xlsx@0.16.9/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+    <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -73,7 +82,7 @@
 
                         <a class="collapse-item" href="#">Estudiantes-Matriculados</a>
                         <a class="collapse-item" href="#">Actividades</a>
-       
+
                     </div>
                 </div>
             </li>
@@ -144,7 +153,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                       
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -188,7 +197,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" id="tabla" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Codigo</th>
@@ -197,69 +206,70 @@
                                                 <td>Direccion</td>
                                                 <td>Telefono</td>
                                                 <td>Correo Electronico</td>
-                                                <td colspan="3">Datos Consignacion</td>
+                                                <td colspan="2">Datos Consignacion</td>
                                             </tr>
                                         </thead>
 
                                         <tbody>
+                                            <?php
+  
+                                                    if(!$_SESSION['nombreAdmin']==""){
+                                                    $sql = "SELECT estudiante.codigo, usuario.documento, usuario.nombre, usuario.direccion, usuario.celular, usuario.correo, estudiante.comprobante FROM estudiante 
+                                                    INNER JOIN usuario ON estudiante.idusuario=usuario.documento ";
+                                                        $resultada = mysqli_query($conexion,$sql);
+                                                        
 
-                                            <td>Jonas Alexander</td>
-                                            <td>Developer</td>
-                                            <td>San Francisco</td>
-                                            <td>30</td>
-                                            <td>2010/07/14</td>
-                                            <td>$86,500</td>
-                                            <td>San Francisco</td>
-                                            <td>30</td>
-                                            <td>2010/07/14</td>
-                                            <td>$86,500</td>
+                                                    }
+
+
+                                                        while($mostrar=mysqli_fetch_array($resultada) ){
+                                                    
+                                                    $rutacomprobante = "../img/Documentos".$nit."/".$mostrar['comprobante'];
+                                                    $nombreArchivocomprobante = $mostrar['comprobante'];
+                                                    
+                                                    ?>
+                                            <td><?php echo $mostrar['codigo']; ?></td>
+                                            <td>CC</td>
+                                            <td><?php echo $mostrar['documento']; ?></td>
+                                            <td><?php echo $mostrar['nombre']; ?></td>
+                                            <td><?php echo $mostrar['direccion']; ?></td>
+                                            <td><?php echo $mostrar['celular']; ?></td>
+                                            <td><?php echo $mostrar['correo']; ?></td>
+                                            <td>$2,500.000</td>
+                                            <td>28/09/2022</td>
+
                                             </tr>
-                                            <tr>
-                                                <td>Shad Decker</td>
-                                                <td>Regional Director</td>
-                                                <td>Edinburgh</td>
-                                                <td>51</td>
-                                                <td>2008/11/13</td>
-                                                <td>$183,000</td>
-                                                <td>Edinburgh</td>
-                                                <td>51</td>
-                                                <td>2008/11/13</td>
-                                                <td>$183,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Michael Bruce</td>
-                                                <td>Javascript Developer</td>
-                                                <td>Singapore</td>
-                                                <td>29</td>
-                                                <td>2011/06/27</td>
-                                                <td>$183,000</td>
-                                                <td>Singapore</td>
-                                                <td>29</td>
-                                                <td>2011/06/27</td>
-                                                <td>$183,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Donna Snider</td>
-                                                <td>Customer Support</td>
-                                                <td>New York</td>
-                                                <td>27</td>
-                                                <td>2011/01/25</td>
-                                                <td>$112,000</td>
-                                                <td>New York</td>
-                                                <td>27</td>
-                                                <td>2011/01/25</td>
-                                                <td>$112,000</td>
-                                            </tr>
+
+                                            <?php
+                                                
+                                                     }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i>Descargar Lista</a>
-
+                        
+                       
                     </div>
+                    <button id="btnExportar" class="btn btn-success">
+                            <i class="fas fa-file-excel"></i> Descargar Lista
+                        </button>
+                            <script>
+                                const $btnExportar = document.querySelector("#btnExportar"),
+                                $tabla = document.querySelector("#tabla");
 
+                                $btnExportar.addEventListener("click", function() {
+                                let tableExport = new TableExport($tabla, {
+                                    exportButtons: false, // No queremos botones
+                                    filename: "Lista-Estudiantes-Matriculados", //Nombre del archivo de Excel
+                                    sheetname: "Lista-Estudiantes-Matriculados", //Título de la hoja
+                                });
+                                let datos = tableExport.getExportData();
+                                let preferenciasDocumento = datos.tabla.xlsx;
+                                tableExport.export2file(preferenciasDocumento.data, preferenciasDocumento.mimeType, preferenciasDocumento.filename, preferenciasDocumento.fileExtension, preferenciasDocumento.merges, preferenciasDocumento.RTL, preferenciasDocumento.sheetname);
+                            });
+                         </script>
 
 
                     <!-- End of Main Content -->
@@ -268,11 +278,12 @@
                     <footer class="sticky-footer bg-white">
                         <div class="container my-auto">
                             <div class="copyright text-center my-auto">
-                                <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy;  Desarrollado por:OSCAR FELIPE CACERES SUAREZ <br>
+                                <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy; Desarrollado
+                                    por:OSCAR FELIPE CACERES SUAREZ <br>
                                     Versión: 1.0</span>
+                            </div>
                         </div>
-                    </div>
-                </footer>
+                    </footer>
                     <!-- End of Footer -->
 
                 </div>
