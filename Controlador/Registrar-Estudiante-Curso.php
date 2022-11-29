@@ -7,10 +7,8 @@ if(isset($_POST["cursos"])){
             $comprobantes=$_FILES['comprobantes']['name'];
             $comprobantes_tmp=$_FILES['comprobantes']['tmp_name'];
             $route_comprobantes="../img/Documentos/".$comprobantes;
-            $curso=11500902;
+            $curso=$_GET['id'];
             move_uploaded_file($comprobantes_tmp,$route_comprobantes);
-
-             
             
             $consultas = "INSERT INTO estudiante(codigo,comprobante,idusuario,idcurso)
             VALUES('$codigos',' $comprobantes','$usuarios','$curso')";
@@ -21,10 +19,9 @@ if(isset($_POST["cursos"])){
             $filaU=mysqli_fetch_array($resultada);
             if($resultada){
                 if($filaU['idcurso']==$curso){//cisco
-                    $_SESSION['active']= true;
-                    $_SESSION['curso']=$codigos;
-                    $_SESSION['UserType']="Estudent-curso";
+                    $_SESSION['CodigoEstudent']=$filaU['codigo'];
                     $_SESSION['CursoID']=$filaU['idcurso'];
+
                     echo "<script>alert('Se ha registro');window.location='../index.php'</script>";
                     
                 }else{
@@ -34,7 +31,7 @@ if(isset($_POST["cursos"])){
             else {
                 printf("Errormessage: %s\n", mysqli_error($conexion));
              }
-           
+            
            
             }   
             else{

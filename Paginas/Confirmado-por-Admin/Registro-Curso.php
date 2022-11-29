@@ -30,7 +30,7 @@
                             class="img" alt="Sample image">
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                        <form action="../../Controlador/Registrar-Estudiante-Desarrollo.php" method="POST" enctype="multipart/form-data">
+                        <form action="../../Controlador/Registrar-Estudiante-Curso.php?id=<?php echo $_GET['id'] ?>" method="POST" enctype="multipart/form-data">
                         
 
                             <div class="divider d-flex align-items-center my-4">

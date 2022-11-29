@@ -40,16 +40,32 @@ if($nit!="" && $contraseña!=""){
         }
     }
     if($radio=="option3"){
-        $verEstudiante="SELECT * FROM usuario WHERE documento='$nit' AND contraseña='$contraseña' ";
+        $verEstudiante="SELECT * FROM usuario  WHERE documento='$nit' AND contraseña='$contraseña' ";
+        
         $resultado = mysqli_query($conexion,$verEstudiante);
         $filaU=mysqli_fetch_array($resultado);
+      
+        
         if($filaU['ustipo']==3){//Estudiante
-               $_SESSION['active']= true;
+            
+              $_SESSION['active']= true;
               $_SESSION['nombreEstudent']=$nit;
               $_SESSION['claveEstudent']=$contraseña;
               $_SESSION['UserType']="Estudent";
               $_SESSION['EstudentID']=$filaU['documento'];
-              echo "<script>alert('Se ha logueado');window.location='../index.php'</script>";
+             $verificarCodigo="SELECT codigo,idcurso FROM  estudiante WHERE idusuario=$nit";
+             $result = mysqli_query($conexion,$verificarCodigo);
+             $filaA=mysqli_fetch_array($result);
+             if($filaA==null){
+                $_SESSION['CodigoEstudent']="";
+              echo "<script>alert('no se encuentra el codigo asociado al estudiante');window.location='../index.php'</script>";
+              }else{
+                $_SESSION['CodigoEstudent']= $filaA['codigo'];
+                $_SESSION['CursoID']=$filaA['idcurso'];
+
+                echo "<script>alert('su codigo estudiante se ha registrado: ".$_SESSION['CodigoEstudent']."');window.location='../index.php'</script>";
+              }
+              
               
           }else{
               echo "<script>alert('Usuario o contraseña incorrectos');window.location='../Paginas/IniciarSesion.php'</script>";

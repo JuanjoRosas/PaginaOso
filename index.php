@@ -66,22 +66,14 @@
                     <span>Cursos</span></a>
             </li>
             ';
-            } else if(!$_SESSION['nombreEstudent']==""){
+            } else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){
                 echo '
             <li class="nav-item">
              <a class="nav-link" href="Paginas/Confirmado-por-Admin/Cursos-confirmado.php">
             <i class="fas fa-fw fa-table"></i>
             <span>Cursos</span></a>
                 </li>
-            ';
-            }else{
-             echo '
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Cursos</span></a>
-            </li>
-            ';    
+            '; 
             }
            
             ?>

@@ -211,7 +211,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="Registro-Curso-Desarrollo.php">
+                                            <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="Registro-Curso.php?id=11500902">
                                                 DESARROLLO DE SOFTWARE</a>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">Docente: Jairo Alberto Fuentes</div>
                                         </div>
@@ -232,7 +232,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <a class="text-xs font-weight-bold text-success text-uppercase mb-1" href="Registro-Curso-Cisco.php">
+                                            <a class="text-xs font-weight-bold text-success text-uppercase mb-1" href="Registro-Curso.php?id=11500901">
                                                 CCNA-CISCO</a>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">Docente: Jose Julian Forero</div>
                                         </div>
