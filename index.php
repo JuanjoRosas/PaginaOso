@@ -1,6 +1,11 @@
 <?php 
     session_start(); 
     error_reporting(E_PARSE);
+    if($_SESSION['nombreUser']=="" && $_SESSION['nombreAdmin']=="" && $_SESSION['nombreEstudent']==""){
+        $_SESSION['verificarLogin']=0;
+    }else{
+        $_SESSION['verificarLogin']=1;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,29 +61,29 @@
             <hr class="sidebar-divider">
 
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Pages Collapse Menu - ENLACE A CURSOS -->
             <?php
-                         if(!$_SESSION['nombreUser']==""){
-                        echo '
-            <li class="nav-item">
-                <a class="nav-link" href="Paginas/Cursos.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Cursos</span></a>
-            </li>
-            ';
+            if(!$_SESSION['nombreUser']==""){
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="Paginas/Cursos.php">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Cursos</span></a>
+                    </li>
+                ';
             } else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){
                 echo '
-            <li class="nav-item">
-             <a class="nav-link" href="Paginas/Confirmado-por-Admin/Cursos-confirmado.php">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Cursos</span></a>
-                </li>
-            '; 
+                    <li class="nav-item">
+                        <a class="nav-link" href="Paginas/Confirmado-por-Admin/Cursos-confirmado.php">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Cursos</span></a>
+                    </li>
+                '; 
             }
            
             ?>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Utilities Collapse Menu - ENLACE A INFORMACIÓN DE CURSOS -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -88,24 +93,18 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-
-                    <?php if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){
-                echo '
-                         <a class="collapse-item" href="#">Calificaciones</a>
-                        <a class="collapse-item" href="#">Actividades</a>
-            ';
-            }else if(!$_SESSION['nombreAdmin']==""){
-                echo '
-                         <a class="collapse-item" href="#">Calificaciones</a>
-                        <a class="collapse-item" href="#">Actividades</a>
-            ';
-            }else{
-             echo '
-             <a class="collapse-item" href="#">Calificaciones</a>
-            <a class="collapse-item" href="#">Actividades</a>
-            ';    
-            }
-                        
+                        <?php 
+                            if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Estudiante registrado en un curso
+                                echo '
+                                    <a class="collapse-item" href="#">Calificaciones</a>
+                                    <a class="collapse-item" href="#">Actividades</a>
+                                ';
+                            }else if(!$_SESSION['nombreAdmin']==""){//Admin
+                                echo '
+                                    <a class="collapse-item" href="#">Calificaciones</a>
+                                    <a class="collapse-item" href="#">Actividades</a>
+                                ';
+                            }//Si es estudiante sin curso asignado, usuariono o no está logeado no despliega nada
                         ?>
                     </div>
                 </div>
@@ -115,92 +114,118 @@
             <hr class="sidebar-divider">
 
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <?php if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){
-                echo '
-                <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Recibios</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
-                        <a class="collapse-item" href="#">Pagos</a>
-
-                    </div>
-                </div>
-            </li>
-            ';
-            }else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){
-                echo '
-                <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Recibios</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
-                        <a class="collapse-item" href="#">Pagos</a>
-
-                    </div>
-                </div>
-            </li>
-            ';
-            }else if(!$_SESSION['nombreAdmin']==""){
-                echo '
-                <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Recibios</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
-                        <a class="collapse-item" href="#">Pagos</a>
-
-                    </div>
-                </div>
-            </li>
-            ';
-            
-        }else{
-             echo '
-             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Recibos</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
-                        <a class="collapse-item" href="#">Pagos</a>
-
-                    </div>
-                </div>
-            </li>
-            ';    
-            }
+            <!-- Nav Item - Pages Collapse Menu - SECCIÓN DE RECIBOS -->
+            <?php 
+                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante registrado al curso se pueden solicitar todos los recibos
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibios</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
+                                    <a class="collapse-item" href="#">Pagos</a>
+                                </div>
+                            </div>
+                        </li>
+                    ';
+                }else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){//Si es estudiante que no esta registrado a un curso no se pueden ver los pagos (porque no ha hecho ninguno)
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibios</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
+                                </div>
+                            </div>
+                        </li>
+                    ';
+                }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos los pagos y documentos subidos
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibios</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="Paginas/Archivos.php">Reporte-<br>Terminacion_Materias</a>
+                                    <a class="collapse-item" href="#">Pagos</a>
+                                </div>
+                            </div>
+                        </li>
+                    ';
+                }else{ //Si es usuario o aún no se ha logeado muestra la carpeta pero no despliega nada
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibos</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <!-- nada -->
+                                </div>
+                            </div>
+                        </li>
+                    ';    
+                }
             ?>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Certificado</span></a>
-            </li>
+            <!-- Nav Item - Charts - SECCIÓN DE CERTIFICADO -->
+            <?php
+                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede solicitar su certificado
+                    echo'
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-fw fa-chart-area"></i>
+                                <span>Certificado</span>
+                            </a>
+                        </li>
+                    ';
+                }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos los estudiantes que pueden solicitar certificado y solicitarlo por ellos
+                    echo'
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-fw fa-chart-area"></i>
+                                <span>Certificado</span>
+                            </a>
+                        </li>
+                    ';
+                }//Si es estudiante sin registrarse en curso, si es usuario o si no se ha logeado no puede ver la 'sección de certificado'
+            ?>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-credit-card-alt"></i>
-                    <span>Evaluacion-Docente</span></a>
-            </li>
+            <!-- Nav Item - Tables - SECCIÓN EVALUACIÓN DOCENTE-->
+            <?php
+                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede realizar una evaluación al docente del curso
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fa fa-credit-card-alt"></i>
+                                <span>Evaluacion-Docente</span>
+                            </a>
+                        </li>
+                    ';
+                }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos las evaluaciones de docentes subidas
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fa fa-credit-card-alt"></i>
+                                <span>Evaluacion-Docente</span>
+                            </a>
+                        </li>
+                    ';
+                }//Si es estudiante sin registrarse en curso, si es usuario o si no se ha logeado no puede ver la 'sección de evaluación docente'
+            ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -233,112 +258,105 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        
-                        
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
+                        <!-- Nav Item - USER INFORMATION -->
                         <?php
-                         if(!$_SESSION['nombreUser']==""){
-                        echo ' 
-                        <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreUser'].'</span>
-                            <img class="img-profile rounded-circle"
-                                src="img/undraw_profile.svg">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Cuenta
-                            </a>
-                    
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Salir
-                            </a>
-                        </div>
-                    </li>
-                        ';
-     
-                         }else if(!$_SESSION['nombreAdmin']==""){
-                            echo ' 
-                            <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreAdmin'].'</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cuenta
-                                </a>
-                        
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Salir
-                                </a>
-                            </div>
-                        </li>
-                            ';
-                        }else if(!$_SESSION['nombreEstudent']==""){
-                            echo ' 
-                            <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreEstudent'].'</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Cuenta
-                                </a>
-                        
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Salir
-                                </a>
-                            </div>
-                        </li>
-                            ';
-                             }else{
-                             echo '
-                             <li class="nav-item dropdown no-arrow">
-                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                                 <img class="img-profile rounded-circle"
-                                     src="img/undraw_profile.svg">
-                             </a>
-                             <!-- Dropdown - User Information -->
-                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                 <a class="dropdown-item" href="Paginas/IniciarSesion.php">
-                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                     Login
-                                 </a>
-                         </li>
-                             ';
-                         }
+                            if(!$_SESSION['nombreUser']==""){//Usuario
+                                echo ' 
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreUser'].'</span>
+                                            <img class="img-profile rounded-circle"
+                                                src="img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Cuenta
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Salir
+                                            </a>
+                                        </div>
+                                    </li>
+                                ';
+                            }else if(!$_SESSION['nombreAdmin']==""){//Admin
+                                echo ' 
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreAdmin'].'</span>
+                                            <img class="img-profile rounded-circle"
+                                                src="img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Cuenta
+                                            </a>
+                                    
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Salir
+                                            </a>
+                                        </div>
+                                    </li>
+                                ';
+                            }else if(!$_SESSION['nombreEstudent']==""){//Estudiante
+                                echo ' 
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreEstudent'].'</span>
+                                            <img class="img-profile rounded-circle"
+                                                src="img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Cuenta
+                                            </a>
+                                    
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Salir
+                                            </a>
+                                        </div>
+                                    </li>
+                                ';
+                            }else{//Sin logear
+                                echo '
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                            <img class="img-profile rounded-circle"
+                                                src="img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="Paginas/IniciarSesion.php">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Login
+                                            </a>
+                                    </li>
+                                ';
+                            }
                         ?>
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
@@ -349,6 +367,13 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">PAGINA-PRINCIPAL</h1>
                     </div>
+                    <?php
+                        if($_SESSION['verificarLogin']==0){
+                            echo '
+                                    <p> Usted aún no se ha logeado.<br>Para acceder a las funcionalidades de la página logeese dirigiendose a la parque superior derecha. </p>
+                            ';
+                        }
+                    ?>
 
 
                     <!-- End of Main Content -->
