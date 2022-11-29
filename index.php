@@ -122,7 +122,7 @@
                             }else if(!$_SESSION['nombreAdmin']==""){//Admin
                                 echo '
                                     <a class="collapse-item" href="Paginas-Admin/Estudiantes-Matriculados.php">Estudiantes-Matriculados</a>
-                                    <a class="collapse-item" href="#">Actividades</a>
+                                    <a class="collapse-item" href="#">Actividades-Cursos</a>
                                 ';
                             }//Si es estudiante sin curso asignado, usuariono o no está logeado no despliega nada
                         ?>
@@ -177,8 +177,8 @@
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
-                                    <a class="collapse-item" href="#">Pagos</a>
+                                    <a class="collapse-item" href="#">Archivos de usuarios</a>
+                                    <a class="collapse-item" href="#">Pagos-Consignaciones</a>
                                 </div>
                             </div>
                         </li>
@@ -217,7 +217,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-fw fa-chart-area"></i>
-                                <span>Certificado</span>
+                                <span>Generar Certificados</span>
                             </a>
                         </li>
                     ';
@@ -240,7 +240,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fa fa-credit-card-alt"></i>
-                                <span>Evaluacion-Docente</span>
+                                <span>Evaluaciones-Docentes</span>
                             </a>
                         </li>
                     ';
