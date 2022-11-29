@@ -97,11 +97,25 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
 
-                        <a class="collapse-item" href="utilities-color.html">Calificaciones</a>
+                    <?php if(!$_SESSION['nombreEstudent']==""){
+                echo '
+                         <a class="collapse-item" href="utilities-color.html">Calificaciones</a>
                         <a class="collapse-item" href="utilities-border.html">Tareas</a>
                         <a class="collapse-item"
-                            href="Paginas/Confirmado-por-Admin/Evaluacion-curso.php">Evaluaciones</a>
+                        href="Paginas/Confirmado-por-Admin/Evaluacion-curso.php">Evaluaciones</a>
                         <a class="collapse-item" href="utilities-other.html">Exposiciones</a>
+            ';
+            }else{
+             echo '
+             <a class="collapse-item" href="#">Calificaciones</a>
+             <a class="collapse-item" href="#">Tareas</a>
+             <a class="collapse-item"
+                 href="#">Evaluaciones</a>
+             <a class="collapse-item" href="#">Exposiciones</a>
+            ';    
+            }
+                        
+                        ?>
                     </div>
                 </div>
             </li>

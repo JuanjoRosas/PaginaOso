@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2022 a las 00:54:44
+-- Tiempo de generación: 29-11-2022 a las 01:49:39
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.12
 
@@ -54,13 +54,21 @@ CREATE TABLE `docente` (
 CREATE TABLE `estudiante` (
   `codigo` int(11) NOT NULL,
   `comprobante` longblob NOT NULL,
-  `nota1` float NOT NULL,
-  `nota2` float NOT NULL,
-  `nota3` decimal(10,0) NOT NULL,
-  `soluciontarea` longblob NOT NULL,
   `idusuario` int(11) NOT NULL,
-  `idcurso` int(11) NOT NULL,
-  `idtarea` int(11) NOT NULL
+  `idcurso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `evaluacion`
+--
+
+CREATE TABLE `evaluacion` (
+  `id` int(11) NOT NULL,
+  `archivo` longblob NOT NULL,
+  `tipoentrega` int(11) NOT NULL,
+  `idcurso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -80,22 +88,16 @@ CREATE TABLE `evaluaciondocente` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tarea`
+-- Estructura de tabla para la tabla `evaluacionestudiante`
 --
 
-CREATE TABLE `tarea` (
+CREATE TABLE `evaluacionestudiante` (
   `id` int(11) NOT NULL,
-  `titulo` text COLLATE utf8mb4_bin NOT NULL,
-  `descripcion` text COLLATE utf8mb4_bin NOT NULL,
-  `archivo` longblob NOT NULL
+  `nota` float NOT NULL,
+  `archivosolucion` longblob NOT NULL,
+  `idestudiante` int(11) NOT NULL,
+  `idevaluacion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
---
--- Volcado de datos para la tabla `tarea`
---
-
-INSERT INTO `tarea` (`id`, `titulo`, `descripcion`, `archivo`) VALUES
-(11111, 'sadsadsad', 'asdiasncasndcvavdfvvavafvadfv', 0x436f757273657261204843564b59334d3546524e502e706466);
 
 -- --------------------------------------------------------
 
@@ -166,8 +168,14 @@ ALTER TABLE `docente`
 --
 ALTER TABLE `estudiante`
   ADD PRIMARY KEY (`codigo`),
-  ADD KEY `idusuario` (`idusuario`,`idcurso`,`idtarea`),
-  ADD KEY `idtarea` (`idtarea`),
+  ADD KEY `idusuario` (`idusuario`),
+  ADD KEY `idcurso` (`idcurso`);
+
+--
+-- Indices de la tabla `evaluacion`
+--
+ALTER TABLE `evaluacion`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idcurso` (`idcurso`);
 
 --
@@ -178,10 +186,12 @@ ALTER TABLE `evaluaciondocente`
   ADD KEY `iddocente` (`iddocente`);
 
 --
--- Indices de la tabla `tarea`
+-- Indices de la tabla `evaluacionestudiante`
 --
-ALTER TABLE `tarea`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `evaluacionestudiante`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idestudiante` (`idestudiante`,`idevaluacion`),
+  ADD KEY `idevaluacion` (`idevaluacion`);
 
 --
 -- Indices de la tabla `usuario`
@@ -211,14 +221,26 @@ ALTER TABLE `curso`
 --
 ALTER TABLE `estudiante`
   ADD CONSTRAINT `estudiante_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`documento`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `estudiante_ibfk_2` FOREIGN KEY (`idtarea`) REFERENCES `tarea` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `estudiante_ibfk_3` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`codigo`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `estudiante_ibfk_2` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`codigo`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `evaluacion`
+--
+ALTER TABLE `evaluacion`
+  ADD CONSTRAINT `evaluacion_ibfk_1` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`codigo`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `evaluaciondocente`
 --
 ALTER TABLE `evaluaciondocente`
   ADD CONSTRAINT `evaluaciondocente_ibfk_1` FOREIGN KEY (`iddocente`) REFERENCES `docente` (`codigo`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `evaluacionestudiante`
+--
+ALTER TABLE `evaluacionestudiante`
+  ADD CONSTRAINT `evaluacionestudiante_ibfk_1` FOREIGN KEY (`idestudiante`) REFERENCES `estudiante` (`codigo`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `evaluacionestudiante_ibfk_2` FOREIGN KEY (`idevaluacion`) REFERENCES `evaluacion` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `validardatos`
