@@ -13,5 +13,4 @@ if($resultadoEliminar){
     echo"<script>alert('No se pudo eliminar'); windows.history.go(-1);</script>";
 }
 
-
 ?>

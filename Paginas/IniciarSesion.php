@@ -39,14 +39,14 @@
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <input name="nit" type="text" id="form3Example3" class="form-control form-control-lg"
-                                    placeholder="Enter a CC" />
+                                    placeholder="Enter a CC"required />
                                 <label class="form-label" for="form3Example3">Nit-Usuario</label>
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-3">
                                 <input name="contraseña" type="password" id="form3Example4"
-                                    class="form-control form-control-lg" placeholder="Enter password" />
+                                    class="form-control form-control-lg" placeholder="Enter password"required />
                                 <label class="form-label" for="form3Example4">Password</label>
                             </div>
 

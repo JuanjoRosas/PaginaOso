@@ -93,8 +93,8 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Reporte-<br>Terminacion_Materias</a>
-                        <a class="collapse-item" href="#">Pagos</a>
+                        <a class="collapse-item" href="Archivos-Usuario.php">Archivos de usuarios</a>
+                        <a class="collapse-item" href="Pagos-Usuario.php">Pagos-Consignaciones</a>
 
                     </div>
                 </div>
@@ -109,7 +109,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="Certificado.php">
                     <i class="fa fa-credit-card-alt"></i>
                     <span>Dar-Evaluacion-Docente</span></a>
             </li>
