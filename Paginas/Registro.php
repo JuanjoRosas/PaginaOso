@@ -40,37 +40,37 @@
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="text" name="nombre" id="form3Example3" class="form-control form-control-lg"
+                                <input type="text" name="nombre" id="form3Example3" class="form-control form-control-lg" required
                                  />
                                 <label class="form-label" for="form3Example3">Nombre-Completo</label>
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input type="text" name="documento" id="form3Example3" class="form-control form-control-lg"
+                                <input type="text" name="documento" id="form3Example3" class="form-control form-control-lg" required
                                 />
                                 <label class="form-label" for="form3Example3">Documento</label>
                             </div>
                             <div class="form-outline mb-4">
-                                <input type="text" name="direccion" id="form3Example3" class="form-control form-control-lg"
+                                <input type="text" name="direccion" id="form3Example3" class="form-control form-control-lg" required
                                     />
                                 <label class="form-label" for="form3Example3">Direccion</label>
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input type="text" name="telefono" id="form3Example3" class="form-control form-control-lg"
+                                <input type="text" name="telefono" id="form3Example3" class="form-control form-control-lg"required
                                 />
                                 <label class="form-label" for="form3Example3">Telefono</label>
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input type="text" name="email" id="form3Example3" class="form-control form-control-lg"
+                                <input type="email" name="email" id="form3Example3" class="form-control form-control-lg"required
                                />
                                 <label class="form-label" for="form3Example3">Email address</label>
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-3">
-                                <input type="password" name="contraseña" id="form3Example4" class="form-control form-control-lg"
+                                <input type="password" name="contraseña" id="form3Example4" class="form-control form-control-lg" required
                                 />
                                 <label class="form-label" for="form3Example4">Password</label>
                             </div>
