@@ -9,9 +9,9 @@ if(isset($_POST["cursos"])){
             $route_comprobantes="../img/Documentos/".$comprobantes;
             $curso=$_GET['id'];
             move_uploaded_file($comprobantes_tmp,$route_comprobantes);
-            
-            $consultas = "INSERT INTO estudiante(codigo,comprobante,idusuario,idcurso)
-            VALUES('$codigos',' $comprobantes','$usuarios','$curso')";
+            $evaluacionDocente=0;
+            $consultas = "INSERT INTO estudiante(codigo,comprobante,idusuario,idcurso,evaluaciondocente)
+            VALUES('$codigos',' $comprobantes','$usuarios','$curso','$evaluacionDocente')";
             $resultados=mysqli_query($conexion,$consultas);
 
             $sql = "SELECT * FROM estudiante  WHERE codigo=$codigos ";

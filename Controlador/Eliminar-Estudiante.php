@@ -2,8 +2,8 @@
 	session_start();
 include ("../Modelo/Conexion/conexion.php");
 //SE DEBE PONER EL METODO GET PARA BORRAR LOS ARCHIVOS Y NO EL METODO POST
-$id=$_GET['id'];
-$eliminar= "DELETE FROM validardatos WHERE id='$id'";
+$id=$_GET['codigo'];
+$eliminar= "DELETE FROM estudiante WHERE codigo='$id'";
 
 $resultadoEliminar = mysqli_query($conexion,$eliminar);
 

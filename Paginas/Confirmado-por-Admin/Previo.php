@@ -1,3 +1,14 @@
+<?php 
+    session_start(); 
+    error_reporting(E_PARSE);
+    include ("../../Modelo/Conexion/conexion.php");
+    if($_SESSION['nombreUser']=="" && $_SESSION['nombreAdmin']=="" && $_SESSION['nombreEstudent']==""){
+        $_SESSION['verificarLogin']=0;
+    }else{
+        $_SESSION['verificarLogin']=1;
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,66 +63,196 @@
             <hr class="sidebar-divider">
 
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="Cursos-confirmado.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Cursos</span></a>
-            </li>
+             <!-- Nav Item - Pages Collapse Menu - ENLACE A CURSOS -->
+             <?php
+            if(!$_SESSION['nombreUser']==""){//usuario puede ver los cursos disponibles y subir documentos para ser estudiante
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../Paginas/Cursos.php">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Cursos</span></a>
+                    </li>
+                ';
+            } else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){//estudiante sin codigo puede ver cursos y subir pagos para registrarse en uno
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="Confirmado-por-Admin/Cursos-confirmado.php">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Cursos</span></a>
+                    </li>
+                '; 
+            } else if(!$_SESSION['nombreAdmin']==""){//admin puede aprovar o rechazar solicitudes de usuarios a estudiante
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../Paginas-Admin/Aprovar-Estudiante.php">
+                            <i class="fas fa-fw fa-table"></i>
+                            <span>Aprovar-Estudiantes</span>
+                        </a>
+                    </li>
+                '; 
+            }
+           
+            ?>
 
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+           <!-- Nav Item - Utilities Collapse Menu - ENLACE A INFORMACIÓN DE CURSOS -->
+           <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Informacion-Cursos</span>
+                    <?php
+                        if(!$_SESSION['nombreAdmin']==""){
+                            echo '
+                                <span>Información-Estudiantes</span>
+                            ';
+                        }else{
+                            echo '
+                                <span>Información-Cursos</span>
+                            ';
+                        }
+                    ?>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-
-                        <a class="collapse-item" href="utilities-color.html">Calificaciones</a>
-                        <a class="collapse-item" href="utilities-border.html">Tareas</a>
-                        <a class="collapse-item" href="Evaluacion-Curso.php">Evaluaciones</a>
-                        <a class="collapse-item" href="utilities-other.html">Exposiciones</a>
+                        <?php 
+                            if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Estudiante registrado en un curso
+                                echo '
+                                    <a class="collapse-item" href="#">Calificaciones</a>
+                                    <a class="collapse-item" href="#">Actividades</a>
+                                ';
+                            }else if(!$_SESSION['nombreAdmin']==""){//Admin
+                                echo '
+                                    <a class="collapse-item" href="../../Paginas-Admin/Estudiantes-Matriculados.php">Estudiantes-Matriculados</a>
+                                    <a class="collapse-item" href="../../Paginas-Admin/Escoger-curso.php">Actividades-Cursos</a>
+                                ';
+                            }//Si es estudiante sin curso asignado, usuariono o no está logeado no despliega nada
+                        ?>
                     </div>
                 </div>
             </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Resivos</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="login.html">Reporte-<br>Terminacion_Materias</a>
-                        <a class="collapse-item" href="register.html">Pagos</a>
+              <!-- Nav Item - Pages Collapse Menu - SECCIÓN DE RECIBOS -->
+              <?php 
+                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante registrado al curso se pueden solicitar todos los recibos
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibios</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="../../Paginas-Admin/Archivos-Usuario.php">Archivos de usuarios</a>
+                                    <a class="collapse-item" href="../../Paginas-Admin/Pagos-Usuario.php">Pagos-Consignaciones</a>
+                                </div>
+                            </div>
+                        </li>
+                    ';
+                }else if(!$_SESSION['nombreEstudent']=="" && $_SESSION['CodigoEstudent']==""){//Si es estudiante que no esta registrado a un curso no se pueden ver los pagos (porque no ha hecho ninguno)
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibios</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="../../Paginas-Admin/Archivos-Usuario.php">Archivos de usuarios</a>
+                                </div>
+                            </div>
+                        </li>
+                    ';
+                }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos los pagos y documentos subidos
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibios</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="../../Paginas-Admin/Archivos-Usuario.php">Archivos de usuarios</a>
+                                    <a class="collapse-item" href="../../Paginas-Admin/Pagos-Usuario.php">Pagos-Consignaciones</a>
+                                </div>
+                            </div>
+                        </li>
+                    ';
+                }else{ //Si es usuario o aún no se ha logeado muestra la carpeta pero no despliega nada
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                                aria-expanded="true" aria-controls="collapsePages">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>Recibos</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <!-- nada -->
+                                </div>
+                            </div>
+                        </li>
+                    ';    
+                }
+            ?>
 
-                    </div>
-                </div>
-            </li>
+            <!-- Nav Item - Charts - SECCIÓN DE CERTIFICADO -->
+            <?php
+                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede solicitar su certificado
+                    echo'
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../Paginas-Admin/Certificado.php">
+                                <i class="fas fa-fw fa-chart-area"></i>
+                                <span>Dar-Certificado</span>
+                            </a>
+                        </li>
+                    ';
+                }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos los estudiantes que pueden solicitar certificado y solicitarlo por ellos
+                    echo'
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../Paginas-Admin/Certificado.php">
+                                <i class="fas fa-fw fa-chart-area"></i>
+                                <span>Generar Certificados</span>
+                            </a>
+                        </li>
+                    ';
+                }//Si es estudiante sin registrarse en curso, si es usuario o si no se ha logeado no puede ver la 'sección de certificado'
+            ?>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Certificado</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-credit-card-alt"></i>
-                    <span>Evaluacion-Docente</span></a>
-            </li>
+            <!-- Nav Item - Tables - SECCIÓN EVALUACIÓN DOCENTE-->
+            <?php
+                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede realizar una evaluación al docente del curso
+                   
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fa fa-credit-card-alt"></i>
+                                <span>Evaluacion-Docente</span>
+                            </a>
+                        </li>
+                    '
+                
+                    ;
+            
+                }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos las evaluaciones de docentes subidas
+                    echo '
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fa fa-credit-card-alt"></i>
+                                <span>Evaluaciones-Docentes</span>
+                            </a>
+                        </li>
+                    ';
+                }//Si es estudiante sin registrarse en curso, si es usuario o si no se ha logeado no puede ver la 'sección de evaluación docente'
+            ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -144,155 +285,336 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
+  <!-- Nav Item - USER INFORMATION -->
+  <?php
+                            if(!$_SESSION['nombreUser']==""){//Usuario
+                                echo ' 
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreUser'].'</span>
+                                            <img class="img-profile rounded-circle"
+                                                src="../../img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Cuenta
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Salir
+                                            </a>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
-                                <img class="img-profile rounded-circle" src="../img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="IniciarSesion.php">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Login
-                                </a>
-
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Salir
-                                </a>
-                            </div>
-                        </li>
+                                    </li>
+                                ';
+                            }else if(!$_SESSION['nombreAdmin']==""){//Admin
+                                echo ' 
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;Administrador</span>
+                                            <img class="img-profile rounded-circle"
+                                                src="../../img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Cuenta
+                                            </a>
+                                    
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Salir
+                                            </a>
+                                        </div>
+                                    </li>
+                                ';
+                            }else if(!$_SESSION['nombreEstudent']==""){//Estudiante
+                                echo ' 
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">&nbsp;&nbsp;'.$_SESSION['nombreEstudent'].'</span>
+                                            <img class="img-profile rounded-circle"
+                                                src="../../img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Cuenta
+                                            </a>
+                                    
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Paginas/salir.php" data-toggle="modal" data-target="#logoutModal">
+                                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Salir
+                                            </a>
+                                        </div>
+                                    </li>
+                                ';
+                            }else{//Sin logear
+                                echo '
+                                    <li class="nav-item dropdown no-arrow">
+                                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                            <img class="img-profile rounded-circle"
+                                                src="../../img/undraw_profile.svg">
+                                        </a>
+                                        <!-- Dropdown - User Information -->
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                            aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="Paginas/IniciarSesion.php">
+                                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Login
+                                            </a>
+                                    </li>
+                                ';
+                            }
+                        ?>
 
                     </ul>
 
                 </nav>
                 <!-- End of Topbar -->
-<!--titulo-->
-<div class="container">
-        <div class="row">
-            <div class="col">
-                <h1 style="text-align: center;">Primera Evaluacion</h1>
-            </div>
-        </div>
-    </div>
+                <!--titulo-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h1 style="text-align: center;">EVALUACION DOCENTE</h1>
+                        </div>
+                    </div>
+                </div>
 
-    <!--Preguntas-->
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <form>
-                    <p><strong>1. Cuando empezo la primera guerra mundial  </strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta1" id="p11"> 1914 </li>
-                        <li><input type="radio" name="pregunta1" id="p12"> 1924</li>
-                        <li><input type="radio" name="pregunta1" id="p13"> 1929</li>
-                        <li><input type="radio" name="pregunta1" id="p14"> 1939</li>
-                    </ol>
-                    <p><strong>2.Cuando fue la segunda guerra mundial </strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta2" id="p21"> 1914</li>
-                        <li><input type="radio" name="pregunta2" id="p23"> 1924</li>
-                        <li><input type="radio" name="pregunta2" id="p22"> 1929</li>
-                        <li><input type="radio" name="pregunta2" id="p24"> 1939</li>
-                    </ol>
-                    <p><strong>3. Cuando fue la masacre en Munich</strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta3" id="p31"> 1986</li>
-                        <li><input type="radio" name="pregunta3" id="p33"> 1972</li>
-                        <li><input type="radio" name="pregunta3" id="p32"> 1956</li>
-                        <li><input type="radio" name="pregunta3" id="p34"> 1999</li>
-                    </ol>
-                    <p><strong>4. Cuando fue el terromoto y tsunami en Japon</strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta4" id="p41"> 2011</li>
-                        <li><input type="radio" name="pregunta4" id="p42"> 2006</li>
-                        <li><input type="radio" name="pregunta4" id="p43"> 2003</li>
-                        <li><input type="radio" name="pregunta4" id="p44"> 2016</li>
-                    </ol>
-                    <p><strong>5. En que año fue el asesinato de John f. Kennedy</strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta5" id="p55"> 1985</li>
-                        <li><input type="radio" name="pregunta5" id="p51"> 1973</li>
-                        <li><input type="radio" name="pregunta5" id="p52"> 1963</li>
-                        <li><input type="radio" name="pregunta5" id="p53"> 1978 </li>
-                    </ol>
-                    <p><strong>6. Que año fue la caida del muro de Berlin </strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta6" id="p61"> 1989</li>
-                        <li><input type="radio" name="pregunta6" id="p62"> 2001</li>
-                        <li><input type="radio" name="pregunta6" id="p66"> 1999</li>
-                        <li><input type="radio" name="pregunta6" id="p64"> 1979</li>
-                    </ol>
-                    <p><strong>7. En que año fue el atentado a las torres gemelas</strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta7" id="p71"> 1999 </li>
-                        <li><input type="radio" name="pregunta7" id="p77"> 2003</li>
-                        <li><input type="radio" name="pregunta7" id="p73"> 2001</li>
-                        <li><input type="radio" name="pregunta7" id="p74"> 2002</li>
-                    </ol>
-                    <p><strong>8. En que año alunizo el apolo 11</strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta8" id="p88"> 1969</li>
-                        <li><input type="radio" name="pregunta8" id="p82"> 1989</li>
-                        <li><input type="radio" name="pregunta8" id="p83"> 1985</li>
-                        <li><input type="radio" name="pregunta8" id="p84"> 1970</li>
-                    </ol>
-                    <p><strong>9. En que año fue el bombardeo a Hiroshima y Nagasaki</strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta9" id="p91"> 1945</li>
-                        <li><input type="radio" name="pregunta9" id="p92"> 1965</li>
-                        <li><input type="radio" name="pregunta9" id="p93"> 1937</li>
-                        <li><input type="radio" name="pregunta9" id="p99"> 2020</li>
-                    </ol>
-                    <p><strong>10. En que año inicio el Holocausto en Alemania</strong></p>
-                    <ol type="A">
-                        <li><input type="radio" name="pregunta10" id="p01"> 1941</li>
-                        <li><input type="radio" name="pregunta10" id="p02"> 1942</li>
-                        <li><input type="radio" name="pregunta10" id="p03"> 1943</li>
-                        <li><input type="radio" name="pregunta10" id="p04"> 1940</li>
-                    </ol>
-                    <hr />
-                    <button type="button" class="btn btn-primary" onclick="resultado()">RESULTADO</button>
-                    <hr />
-                </form>
-            </div>
-        </div>
-    </div>
+                <!--Preguntas-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <form action="../../Controlador/Examen-Docente.php" method="POST">
 
-    <!-- Optional JavaScript -->
-    <!--Llamada al script de respuestas-->
-    <script src="../../js/respuestas.js"></script>
+                                <div div class="card mb-4 py-3 border-left-dark">
+                                    <div class="card-body">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                                    <h1 class="h3 mb-0 text-gray-800">Desempeño</h1>
+
+                                                </div>
+                                                <p><strong>1. tiene la predisposicion de resolver cualquier duda
+                                                        referente a la clase.</strong><select name="desmpeño1"class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+
+                                                <p><strong>2. Emplea las tecnologías de la información y de la
+                                                        comunicación </strong><select name="desmpeño2"class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>3. Promueve el uso seguro, legal y ético de la información
+                                                        digital. </strong><select name="desmpeño3"class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>4. Es accesible y está dispuesto a brindarte ayuda académica.
+                                                    </strong><select name="desmpeño4" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>5. Fomenta la importancia de contribuir a la conservación del
+                                                        medio ambiente. </strong><select name="desmpeño5" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>>
+                                                    </select></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div div class="card mb-4 py-3 border-left-dark">
+                                    <div class="card-body">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                                    <h1 class="h3 mb-0 text-gray-800">HABILIDAD</h1>
+
+                                                </div>
+                                                <p><strong>1. El docente revisa las bases teoricas enfocadas al estudio
+                                                        de la pedagogia </strong><select name="habilidad1" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+
+                                                <p><strong>2. Adquiere conocimientos a travez de cursos relaciondos a su
+                                                        ejercicio profesional. </strong><select name="habilidad2" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>3. Tiene la predisposicion en el proceso de enseñanzas a todo
+                                                        .tipo de estudiantes- </strong><select name="habilidad3" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>4. utiliza diferentes procesos pedagogicos en el proceso de
+                                                        enseñanza. </strong><select name="habilidad4"
+                                                        class="form-select" aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>5. Promueve el uso de tecnicas de aprendizaje ante los
+                                                        posibles factores externos. </strong><select name="habilidad5"
+                                                        class="form-select" aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div div class="card mb-4 py-3 border-left-dark">
+                                    <div class="card-body">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                                    <h1 class="h3 mb-0 text-gray-800">COMPORTAMIENTO</h1>
+
+                                                </div>
+                                                <p><strong>1. Considera los resultados de la evaluación (asesorías,
+                                                        trabajos complementarios). </strong><select name="comportamiento1" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+
+                                                <p><strong>2. Da a conocer las calificaciones en el plazo establecido
+                                                    </strong><select name="comportamiento2" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>3. Otorga calificaciones imparciales. </strong><select name="comportamiento3"
+                                                        class="form-select" aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>4. Toma en cuenta las actividades realizadas y los productos
+                                                        como evidencias pa calificación</strong><select name="comportamiento4"
+                                                        class="form-select" aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                                <p><strong>5. Proporciona información para realizar adecuadamente las
+                                                        actividades de evaluación </strong><select name="comportamiento5" class="form-select"
+                                                        aria-label="Default select example">
+
+                                                        <option selected>De una calificacion de 1 a 5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <button name="resultado" type="submit" class="btn btn-primary">RESULTADO</button>
+                                <hr />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optional JavaScript -->
+                <!--Llamada al script de respuestas-->
+                <script src="../../js/respuestas.js"></script>
 
 
 
@@ -301,12 +623,14 @@
 
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2021</span>
-                        </div>
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy;  Desarrollado por:OSCAR FELIPE CACERES SUAREZ <br>
+                            Versión: 1.0
+                        </span>
                     </div>
-                </footer>
+                </div>
+            </footer>
                 <!-- End of Footer -->
 
             </div>
@@ -341,21 +665,21 @@
         </div>
 
         <!-- Bootstrap core JavaScript-->
-        <script src="../vendor/jquery/jquery.min.js"></script>
-        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+        <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Core plugin JavaScript-->
-        <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
         <!-- Custom scripts for all pages-->
-        <script src="../js/sb-admin-2.min.js"></script>
+        <script src="../../js/sb-admin-2.min.js"></script>
 
         <!-- Page level plugins -->
-        <script src="../vendor/chart.js/Chart.min.js"></script>
+        <script src="../../vendor/chart.js/Chart.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script src="../js/demo/chart-area-demo.js"></script>
-        <script src="../js/demo/chart-pie-demo.js"></script>
+        <script src="../../js/demo/chart-area-demo.js"></script>
+        <script src="../../js/demo/chart-pie-demo.js"></script>
 
 </body>
 

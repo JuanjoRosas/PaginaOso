@@ -2,11 +2,11 @@
 session_start();
 include ("../Modelo/Conexion/conexion.php");
 
-$tipo=$_GET['codigo'];
+$codigo=$_GET['codigo'];
 
-    $estudiante=0;
+    $estudiante=1;
 
-    $consulta= "UPDATE estudiante SET codigo = '$estudiante' WHERE codigo = '$tipo'";
+    $consulta= "UPDATE estudiante SET evaluaciondocente = '$estudiante' WHERE codigo = '$codigo'";
     $resultado = mysqli_query($conexion,$consulta);
 
 echo "<script> location='../Paginas-Admin/Certificado.php'</script>";

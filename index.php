@@ -164,7 +164,7 @@
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="Paginas/Archivos.php">Archivos de usuarios</a>
+                                    <a class="collapse-item" href="Paginas-Admin/Archivos-Usuario.php">Archivos de usuarios</a>
                                 </div>
                             </div>
                         </li>
@@ -228,19 +228,21 @@
 
             <!-- Nav Item - Tables - SECCIÓN EVALUACIÓN DOCENTE-->
             <?php
-                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede realizar una evaluación al docente del curso
+                if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['nombreEstudent']==""){//Si es estudiante con curso registrado puede realizar una evaluación al docente del curso
+                    
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluacion-Docente</span>
                             </a>
                         </li>
                     ';
+                     
                 }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos las evaluaciones de docentes subidas
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluaciones-Docentes</span>
                             </a>

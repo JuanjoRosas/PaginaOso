@@ -230,7 +230,7 @@ include ("../Modelo/Conexion/conexion.php");
                 if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede realizar una evaluación al docente del curso
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluacion-Docente</span>
                             </a>
@@ -239,7 +239,7 @@ include ("../Modelo/Conexion/conexion.php");
                 }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos las evaluaciones de docentes subidas
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluaciones-Docentes</span>
                             </a>

@@ -147,7 +147,7 @@ include ("../Modelo/Conexion/conexion.php");
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="#">Archivos de usuario</a>
+                                    <a class="collapse-item" href="Archivos-Usuario.php">Archivos de usuario</a>
                                     <a class="collapse-item" href="Pagos-Usuario.php">Pagos-Consignaciones</a>
                                 </div>
                             </div>
@@ -163,7 +163,7 @@ include ("../Modelo/Conexion/conexion.php");
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="#">Archivos de usuario</a>
+                                    <a class="collapse-item" href="Archivos-Usuario.php">Archivos de usuario</a>
                                 </div>
                             </div>
                         </li>
@@ -178,7 +178,7 @@ include ("../Modelo/Conexion/conexion.php");
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="#">Archivos de usuarios</a>
+                                    <a class="collapse-item" href="Archivos-Usuario.php">Archivos de usuarios</a>
                                     <a class="collapse-item" href="Pagos-Usuario.php">Pagos-Consignaciones</a>
                                 </div>
                             </div>
@@ -230,7 +230,7 @@ include ("../Modelo/Conexion/conexion.php");
                 if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede realizar una evaluación al docente del curso
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluacion-Docente</span>
                             </a>
@@ -239,7 +239,7 @@ include ("../Modelo/Conexion/conexion.php");
                 }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos las evaluaciones de docentes subidas
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluaciones-Docentes</span>
                             </a>
@@ -398,7 +398,6 @@ include ("../Modelo/Conexion/conexion.php");
                                         <thead>
                                             <tr>
                                                 <th>Estudiante</th>
-                                                <th>Nombre</th>
                                                 <th>Definitiva</th>
                                                 <th>Certificado</th>
 
@@ -410,7 +409,7 @@ include ("../Modelo/Conexion/conexion.php");
   
                                                 if(!$_SESSION['nombreAdmin']==""){
 
-                                                    $sql = "SELECT * FROM estudiante INNER JOIN usuario ON (usuario.documento=estudiante.idusuario) WHERE estudiante.codigo!=0 ";
+                                                    $sql = "SELECT * FROM estudiante WHERE evaluaciondocente!=1 ";
                                                     $resultada = mysqli_query($conexion,$sql);
                                                     
                                                 
@@ -421,7 +420,7 @@ include ("../Modelo/Conexion/conexion.php");
                                             <tr>
                                              
                                                 <td><?php echo $mostrar['codigo']; ?></td>
-                                                <td><?php echo $mostrar['nombre']; ?></td>
+                                                
                                                 <td>3.1</td>
                                                 <td> <a href="../Controlador/Certificar.php?codigo=<?php echo $mostrar['codigo']; ?>"
                                                         class="btn btn-success btn-circle ">
@@ -437,25 +436,25 @@ include ("../Modelo/Conexion/conexion.php");
                                             <?php
                                                 
                                             }
-                                        }else if(!$_SESSION['nombreUser']==""){
-
-                                            $sql = "SELECT * FROM estudiante WHERE codigo=0";
-                                            $resultada = mysqli_query($conexion,$sql);
+                                        }else if(!$_SESSION['nombreEstudent']=="" ){
+                                            
+                                            $sqla = "SELECT * FROM estudiante WHERE evaluaciondocente!=0 AND codigo=".$_SESSION['CodigoEstudent']."";
+                                            $resultadaa = mysqli_query($conexion,$sqla);
                                             
                                         
                                         
 
-                                    while($mostrar=mysqli_fetch_array($resultada) ){
+                                    while($mostrara=mysqli_fetch_array($resultadaa) ){
                                        
                                         $rutaCertificado = "../img/Documentos/Certificado.png";
                                         $nombreArchivoCertificado = "Certificado.png";
                                 ?>
                                     <tr>
                                      
-                                    <td><?php echo $mostrar['codigo']; ?></td>
-                                                <td><?php echo $mostrar['nombre']; ?></td>
+                                    <td><?php echo $mostrara['codigo']; ?></td>
+                                               
                                                 <td>3.1</td>
-                                                <td><?php echo $mostrar['reporte']; ?>
+                                                <td><?php echo $mostrara['reporte']; ?>
                                                 <a href="<?php echo $rutaCertificado; ?>"
                                                         download="<?php echo $nombreArchivoCertificado; ?>"
                                                         class="btn btn-success btn-sm ">

@@ -116,7 +116,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                     <i class="fa fa-credit-card-alt"></i>
                     <span>Dar-Evaluacion-Docente</span></a>
             </li>
