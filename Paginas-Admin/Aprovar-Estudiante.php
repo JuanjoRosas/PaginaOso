@@ -102,14 +102,14 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="Certificado.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Dar-Certificado</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="Certificado.php">
+                <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                     <i class="fa fa-credit-card-alt"></i>
                     <span>Dar-Evaluacion-Docente</span></a>
             </li>

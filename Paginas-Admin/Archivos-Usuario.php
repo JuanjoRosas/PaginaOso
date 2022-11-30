@@ -230,7 +230,7 @@ include ("../Modelo/Conexion/conexion.php");
                 if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Si es estudiante con curso registrado puede realizar una evaluación al docente del curso
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluacion-Docente</span>
                             </a>
@@ -239,7 +239,7 @@ include ("../Modelo/Conexion/conexion.php");
                 }else if(!$_SESSION['nombreAdmin']==""){//Si es admin puede ver todos las evaluaciones de docentes subidas
                     echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="../Paginas/Confirmado-por-Admin/Previo.php">
                                 <i class="fa fa-credit-card-alt"></i>
                                 <span>Evaluaciones-Docentes</span>
                             </a>
@@ -411,7 +411,7 @@ include ("../Modelo/Conexion/conexion.php");
   
                                                 if(!$_SESSION['nombreAdmin']==""){
 
-                                                    $sql = "SELECT * FROM usuario INNER JOIN estudiante ON (usuario.documento=estudiante.idusuario) INNER JOIN validardatos ON (usuario.documento=validardatos.idusuario) WHERE validardatos.verificar=1 ";
+                                                    $sql = "SELECT * FROM usuario INNER JOIN estudiante ON (usuario.documento=estudiante.idusuario) INNER JOIN validardatos ON (usuario.documento=validardatos.idusuario) WHERE validardatos.verificar!=0 ";
                                                     $resultada = mysqli_query($conexion,$sql);
                                                     
                                                 

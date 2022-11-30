@@ -39,14 +39,14 @@
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input name="codigos"type="text" id="form3Example3" class="form-control form-control-lg"
+                                <input name="codigos"type="text" id="form3Example3" class="form-control form-control-lg" require
                                  />
                                 <label class="form-label" for="form3Example3">Codigo</label>
                             </div>
 
                            
                             <div class="form-outline mb-3">
-                                <input name="comprobantes"type="file" id="form3Example4" class="form-control form-control-lg"
+                                <input name="comprobantes"type="file" id="form3Example4" class="form-control form-control-lg" require
                                 />
                                 <label class="form-label" for="form3Example4">Comprobante-Pago</label>
                             </div>
