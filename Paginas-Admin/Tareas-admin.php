@@ -1,6 +1,43 @@
 <?php 
     session_start(); 
     error_reporting(E_PARSE);
+    include ("../Modelo/Conexion/conexion.php");
+
+    class actividad
+    {
+        public $numero;
+        public $descripcion;
+    }
+
+    $eval_1 = new actividad();
+    $eval_1->numero = 1;
+    $eval_1->descripcion = "Evaluación 1";
+
+    $eval_2 = new actividad();
+    $eval_2->numero = 2;
+    $eval_2->descripcion = "Evaluación 2";
+
+    $tarea = new actividad();
+    $tarea->numero = 3;
+    $tarea->descripcion = "Tarea";
+
+    $exposicion = new actividad();
+    $exposicion->numero = 4;
+    $exposicion->descripcion = "Exposición";
+
+    $tiposActividad = array($eval_1,$eval_2,$tarea,$exposicion);
+
+    $idCursoTarea = $_GET['idCurso'];
+
+    function buscarTipoEntrega($array, $numero)
+    {
+        foreach ($array as &$tempVar){
+            if($tempVar->numero == $numero){
+                return $tempVar->descripcion;
+            }
+        }
+        return "no";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,43 +211,97 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                                        <!-- Page Heading -->
+                                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">ACTIVIDADES DEL CURSO</h1>
+                    </div>
 
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="Tareas-admin.php?idCurso=<?php echo $_SESSION['idCursoDesarrollo'] ?>"> DESARROLLO DE SOFTWARE </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> Docente: Jairo Alberto Fuentes </div>
+                    <div class="container-fluid">
+                        <!-- Content Row -->
+
+                        <div class="row">
+                            <!-- Grow In Utility -->
+                            <div class="col-lg-15">
+                                <form action="../Controlador/SubirActividad.php?idCurso=<?php echo $idCursoTarea ?>" method="POST" enctype="multipart/form-data" id="formularioActividad">
+                                    <div class="card position-relative">
+                                        <div class="card-header py-10">
+                                            <h6 class="m-0 font-weight-bold text-primary">Subir Actividad</h6>
+                                            <p class="mb-0 small">Note: en esta sección vas a poder subir todas las actividades
+                                            para los estudiantes que se encuentren en este curso de Profundización.</p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="exampleFormControlInput1" class="form-label">Codigo-Actividad</label>
+                                            <input type="text" name="codigo" class="form-control" id="exampleFormControlInput1">
+                                            <label for="exampleFormControlInput1" class="form-label">Titulo de la Actividad</label>
+                                            <input type="text" name="titulo" class="form-control" id="exampleFormControlInput1">
+                                            <label for="exampleFormControlInput1" class="form-label">Tipo de Actividad</label>
+                                            <select type="text" name="tipoActividad" class="form-control" id="seleccionadorTipoActividad" form="formularioActividad">
+                                                <?php
+                                                    foreach ($tiposActividad as &$tempVar){
+                                                ?>
+                                                <option value=<?php echo $tempVar->numero?>> <?php echo $tempVar->descripcion ?></option>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="small mb-1">Subir documento de descripción:</div>
+                                        <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+                                            <input  type="file" name="actividad" id="form3Example4" class="form-control form-control-lg" />
+                                        </nav>
+                                        <Button name="subir" type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Subir</Button>
                                     </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="divider d-flex align-items-center my-4">
+                            <h1 class="h3 mb-0 text-gray-800">Lista de Actividades</h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Tipo de actividad</th>
+                                            <th>Documento</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <?php
+                                            if(!$_SESSION['nombreAdmin']==""){
+                                                $sqla = "SELECT * FROM evaluacion WHERE idcurso = $idCursoTarea";
+                                                $resultada = mysqli_query($conexion,$sqla);
+                                            }
+                                            $mostrar=mysqli_fetch_array($resultada);
+                                            while($mostrar != false && $mostrar != null){
+                                                $rutaarchivo = "../img/Tareas/".$mostrar['archivo'];
+                                                $nombreArchivo = $mostrar['archivo'];  
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $mostrar['id']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo buscarTipoEntrega($tiposActividad, $mostrar['tipoentrega']); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $mostrar['titulo']; ?>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                                $mostrar=mysqli_fetch_array($resultada);
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Earnings (Annual) Card Example -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <a class="text-xs font-weight-bold text-success text-uppercase mb-1" href="Tareas-admin.php?idCurso=<?php echo $_SESSION['idCursoCisco'] ?>"> CCNA-CISCO </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">Docente: Jose Julian Forero </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 <!-- End of Page Content -->
-
             </div>
             <!-- End of Main Content -->
 

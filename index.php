@@ -7,6 +7,8 @@
         $_SESSION['verificarLogin']=1;
     }
     $_SESSION['notaFinalEstudiante']=3.1;
+    $_SESSION['idCursoDesarrollo']=11500902;
+    $_SESSION['idCursoCisco']=11500901;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +87,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="Paginas-Admin/Aprovar-Estudiante.php">
                             <i class="fas fa-fw fa-table"></i>
-                            <span>Aprovar-Estudiante</span>
+                            <span>Aprovar-Estudiantes</span>
                         </a>
                     </li>
                 '; 
@@ -101,11 +103,11 @@
                     <?php
                         if(!$_SESSION['nombreAdmin']==""){
                             echo '
-                                <span>Informacion-Estudiantes</span>
+                                <span>Información-Estudiantes</span>
                             ';
                         }else{
                             echo '
-                                <span>Informacion-Cursos</span>
+                                <span>Información-Cursos</span>
                             ';
                         }
                     ?>
@@ -122,7 +124,7 @@
                             }else if(!$_SESSION['nombreAdmin']==""){//Admin
                                 echo '
                                     <a class="collapse-item" href="Paginas-Admin/Estudiantes-Matriculados.php">Estudiantes-Matriculados</a>
-                                    <a class="collapse-item" href="#">Actividades-Cursos</a>
+                                    <a class="collapse-item" href="Paginas-Admin/Escoger-curso.php">Actividades-Cursos</a>
                                 ';
                             }//Si es estudiante sin curso asignado, usuariono o no está logeado no despliega nada
                         ?>
@@ -275,7 +277,6 @@
 
                     <!-- Topbar Search -->
 
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -382,7 +383,6 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">PAGINA-PRINCIPAL</h1>
@@ -394,71 +394,68 @@
                             ';
                         }
                     ?>
-
-
-                    <!-- End of Main Content -->
-
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy;  Desarrollado por:OSCAR FELIPE CACERES SUAREZ <br>
-                                    Versión: 1.0</span>
-                                
-        
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- End of Footer -->
-
                 </div>
-                <!-- End of Content Wrapper -->
-
+                <!-- End of Page Content -->
             </div>
-            <!-- End of Page Wrapper -->
+            <!-- End of Main Content -->
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">¿Desea cerrar sesión?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Se cerrara la sesion actual.</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                            <a class="btn btn-primary" href="Paginas/salir.php">Salir</a>
-                        </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © 2022 UFPS - Todos los Derechos Reservados &copy;  Desarrollado por:OSCAR FELIPE CACERES SUAREZ <br>
+                            Versión: 1.0
+                        </span>
                     </div>
                 </div>
+            </footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Desea cerrar sesión?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Se cerrara la sesion actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="Paginas/salir.php">Salir</a>
+                </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
-            <!-- Page level plugins -->
-            <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
 
-            <!-- Page level custom scripts -->
-            <script src="js/demo/chart-area-demo.js"></script>
-            <script src="js/demo/chart-pie-demo.js"></script>
-
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 </body>
 
 </html>
