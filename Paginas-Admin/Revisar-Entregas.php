@@ -202,26 +202,36 @@
                                     <tbody>
                                         <?php
                                             if(!$_SESSION['nombreAdmin']==""){
-                                                $sqla = "SELECT * FROM evaluacion WHERE idcurso = $idCursoTarea";
+                                                $sqla = "
+                                                SELECT id, idestudiante, archivosolucion, nota, idusuario
+                                                FROM 
+                                                    evaluacionestudiante A
+                                                LEFT JOIN
+                                                    estudiante B
+                                                ON A.idestudiante = B.codigo
+                                                WHERE idevaluacion = $idEntrega
+                                                ";
                                                 $resultada = mysqli_query($conexion,$sqla);
                                             }
                                             $mostrar=mysqli_fetch_array($resultada);
-                                            while(false){
-                                                $rutaArchivo = "../img/Tareas/".$mostrar['archivo'];
-                                                $nombreArchivo = $mostrar['archivo'];  
+                                            while($mostrar != false && $mostrar != null){
+                                                $rutaArchivo = "../img/Tareas/Estudiantes/".$mostrar['archivosolucion'];
+                                                $nombreArchivo = $mostrar['archivosolucion'];  
                                         ?>
                                         <tr>
                                             <td>
                                                 <?php echo $mostrar['id']; ?>
                                             </td>
                                             <td>
-                                                <?php echo buscarTipoEntrega($tiposActividad, $mostrar['tipoentrega']); ?>
+                                                <?php echo $mostrar['idusuario']." [".$mostrar['idestudiante']."]"; ?>
                                             </td>
                                             <td>
-                                                <?php echo $mostrar['titulo']; ?>
                                                 <a href="<?php echo $rutaArchivo; ?>" download="<?php echo $nombreArchivo; ?>" class="btn btn-success btn-sm ">
                                                     <span class="fas fa-download"></span>
                                                 </a>
+                                            </td>
+                                            <td>
+                                                <?php echo $mostrar['nota']; ?>
                                             </td>
                                             <td>
                                                 <a href="#" class="btn btn-gray">
