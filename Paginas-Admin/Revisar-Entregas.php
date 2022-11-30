@@ -3,41 +3,9 @@
     error_reporting(E_PARSE);
     include ("../Modelo/Conexion/conexion.php");
 
-    class actividad
-    {
-        public $numero;
-        public $descripcion;
-    }
-
-    $eval_1 = new actividad();
-    $eval_1->numero = 1;
-    $eval_1->descripcion = "Evaluación 1";
-
-    $eval_2 = new actividad();
-    $eval_2->numero = 2;
-    $eval_2->descripcion = "Evaluación 2";
-
-    $tarea = new actividad();
-    $tarea->numero = 3;
-    $tarea->descripcion = "Tarea";
-
-    $exposicion = new actividad();
-    $exposicion->numero = 4;
-    $exposicion->descripcion = "Exposición";
-
-    $tiposActividad = array($eval_1,$eval_2,$tarea,$exposicion);
-
-    $idCursoTarea = $_GET['idCurso'];
-
-    function buscarTipoEntrega($array, $numero)
-    {
-        foreach ($array as &$tempVar){
-            if($tempVar->numero == $numero){
-                return $tempVar->descripcion;
-            }
-        }
-        return "sinTipo";
-    }
+    $idEntrega = $_GET['idEntrega'];
+    $tipoEntrega = $_GET['tipoEntrega'];
+    $tituloEntrega = $_GET['tituloEntrega'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -211,61 +179,22 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                                        <!-- Page Heading -->
-                                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">ACTIVIDADES DEL CURSO</h1>
+                    <!-- Page Heading -->
+                    <div class="divider d-flex align-items-center my-4">
+                        <h1 class="h3 mb-0 text-gray-800"><?php echo "Entregas de los estudiantes - ".$tipoEntrega.": ".$tituloEntrega;?></h1>
                     </div>
 
                     <div class="container-fluid">
-                        <!-- Content Row -->
-
-                        <div class="row">
-                            <!-- Grow In Utility -->
-                            <div class="col-lg-15">
-                                <form action="../Controlador/SubirActividad.php?idCurso=<?php echo $idCursoTarea ?>" method="POST" enctype="multipart/form-data" id="formularioActividad">
-                                    <div class="card position-relative">
-                                        <div class="card-header py-10">
-                                            <h6 class="m-0 font-weight-bold text-primary">Subir Actividad</h6>
-                                            <p class="mb-0 small">Note: en esta sección vas a poder subir todas las actividades
-                                            para los estudiantes que se encuentren en este curso de Profundización.</p>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="exampleFormControlInput1" class="form-label">Codigo-Actividad</label>
-                                            <input type="text" name="codigo" class="form-control" id="exampleFormControlInput1">
-                                            <label for="exampleFormControlInput1" class="form-label">Titulo de la Actividad</label>
-                                            <input type="text" name="titulo" class="form-control" id="exampleFormControlInput1">
-                                            <label for="exampleFormControlInput1" class="form-label">Tipo de Actividad</label>
-                                            <select type="text" name="tipoActividad" class="form-control" id="seleccionadorTipoActividad" form="formularioActividad">
-                                                <?php
-                                                    foreach ($tiposActividad as &$tempVar){
-                                                ?>
-                                                <option value=<?php echo $tempVar->numero?>> <?php echo $tempVar->descripcion ?></option>
-                                                <?php
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <div class="small mb-1">Subir documento de descripción:</div>
-                                        <nav class="navbar navbar-expand navbar-light bg-light mb-4">
-                                            <input  type="file" name="actividad" id="form3Example4" class="form-control form-control-lg" />
-                                        </nav>
-                                        <Button name="subir" type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Subir</Button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="divider d-flex align-items-center my-4">
-                            <h1 class="h3 mb-0 text-gray-800">Lista de Actividades</h1>
-                        </div>
+                        <!-- Tabla de entregas -->
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Codigo</th>
-                                            <th>Tipo de actividad</th>
-                                            <th>Título/Documento</th>
+                                            <th>Codigo de entrega</th>
+                                            <th>Estudiante [código]</th>
+                                            <th>Entrega</th>
+                                            <th>Nota</th>
                                             <th>Acción</th>
                                         </tr>
                                     </thead>
@@ -277,7 +206,7 @@
                                                 $resultada = mysqli_query($conexion,$sqla);
                                             }
                                             $mostrar=mysqli_fetch_array($resultada);
-                                            while($mostrar != false && $mostrar != null){
+                                            while(false){
                                                 $rutaArchivo = "../img/Tareas/".$mostrar['archivo'];
                                                 $nombreArchivo = $mostrar['archivo'];  
                                         ?>
@@ -295,11 +224,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="Revisar-Entregas.php?
-                                                idEntrega=<?php echo $mostrar['id'];?>
-                                                &tipoEntrega=<?php echo buscarTipoEntrega($tiposActividad, $mostrar['tipoentrega']);?>
-                                                &tituloEntrega=<?php echo $mostrar['titulo'];?>"
-                                                class="btn btn-gray">
+                                                <a href="#" class="btn btn-gray">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-danger btn-circle btn-sm">
@@ -310,7 +235,6 @@
                                         <?php
                                                 $mostrar=mysqli_fetch_array($resultada);
                                             }
-                                            mysqli_close($conexion);
                                         ?>
                                     </tbody>
                                 </table>

@@ -8,8 +8,6 @@
         $tipoActividad=$_POST['tipoActividad'];
         $actividad=$_FILES['actividad']['name'];
 
-        //echo "<script>alert('".filter_input(INPUT_POST, "codigo", FILTER_VALIDATE_INT)."')</script>";
-
         if(filter_var($codigo, FILTER_VALIDATE_INT) && filter_var($idCursoTarea, FILTER_VALIDATE_INT))
         {
             $ConsultaCodigoTarea = "SELECT id FROM evaluacion WHERE id = $codigo";

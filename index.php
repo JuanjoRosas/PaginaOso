@@ -118,8 +118,8 @@
                         <?php 
                             if(!$_SESSION['nombreEstudent']=="" && !$_SESSION['CodigoEstudent']==""){//Estudiante registrado en un curso
                                 echo '
-                                    <a class="collapse-item" href="#">Calificaciones</a>
-                                    <a class="collapse-item" href="#">Actividades</a>
+                                    <a class="collapse-item" href="Paginas/Confirmado-por-Admin/Calificaciones-Estudiante.php">Calificaciones</a>
+                                    <a class="collapse-item" href="Paginas/Confirmado-por-Admin/Entregas-Estudiante.php">Actividades</a>
                                 ';
                             }else if(!$_SESSION['nombreAdmin']==""){//Admin
                                 echo '
@@ -148,7 +148,7 @@
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="Paginas-Admin/Archivos-Usuario.php">Archivos de usuarios</a>
+                                    <a class="collapse-item" href="Paginas-Admin/Archivos-Usuario.php">Archivos de usuario</a>
                                     <a class="collapse-item" href="Paginas-Admin/Pagos-Usuario.php">Pagos-Consignaciones</a>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@
                             </a>
                             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="Paginas/Archivos.php">Archivos de usuarios</a>
+                                    <a class="collapse-item" href="Paginas/Archivos.php">Archivos de usuario</a>
                                 </div>
                             </div>
                         </li>
